@@ -57,10 +57,12 @@ export async function bridgeETH(
     value: valueAndFee,
   });
 
-  const { maxFeePerGas, maxPriorityFeePerGas } = await provider.getFeeData();
+  let { maxFeePerGas, maxPriorityFeePerGas } = await provider.getFeeData();
+  if (maxFeePerGas === null || maxPriorityFeePerGas === null)
+    console.error(`Error while call fee data`);
+  maxFeePerGas! += maxFeePerGas! / 10n;
 
-  const gasCost = (maxFeePerGas! + maxFeePerGas! / 100n * GAS_MULTIPLICATOR) *
-    gasLimit;
+  const gasCost = (maxFeePerGas! + maxFeePerGas! / 100n * GAS_MULTIPLICATOR) * gasLimit;
   valueAndFee = valueAndFee - gasCost;
   amount = amount - gasCost;
   minAmount = amount - (amount * slippage) / 1000n;
