@@ -33,9 +33,9 @@ export async function bridgeETH(
   const fees = await routerContract.quoteLayerZeroFee(
     dstChainId,
     1,
-    "0x0000000000000000000000000000000000000001",
+    wallet.address,
     "0x",
-    [0, 0, "0x0000000000000000000000000000000000000001"],
+    [0, 0, wallet.address],
   );
 
   const [fee] = fees;
@@ -60,7 +60,7 @@ export async function bridgeETH(
   let { maxFeePerGas, maxPriorityFeePerGas } = await provider.getFeeData();
   if (maxFeePerGas === null || maxPriorityFeePerGas === null)
     console.error(`Error while call fee data`);
-  maxFeePerGas! += maxFeePerGas! / 10n;
+  maxFeePerGas! += maxFeePerGas! / 50n;
 
   const gasCost = (maxFeePerGas! + maxFeePerGas! / 100n * GAS_MULTIPLICATOR) * gasLimit;
   valueAndFee = valueAndFee - gasCost;

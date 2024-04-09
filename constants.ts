@@ -8,7 +8,7 @@ export const RPC_URL = {
 };
 
 // Меньше этого значения бриджить не будет
-export const MIN_ETH_TO_BRIDGE = 0.0003;
+export const MIN_ETH_TO_BRIDGE = 0.0002;
 
 export const GAS_MULTIPLICATOR = 30n;
 
